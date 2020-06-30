@@ -1,0 +1,52 @@
+{{ define "detail"}}
+{{ template "header"}}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ .Name }}</h5>
+                <p class="card-text">{{ .Description }}</p>
+                <a href="/items/{{.ID}}/info" class="btn btn-primary">Actualizar información</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    {{range .Info}}
+    <div class="row">
+        <div class="col-sm-6">Marca</div>
+        <div class="col-sm-6">{{ .Brand }} </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">Precio</div>
+        <div class="col-sm-6">{{ .Price }} </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">Fecha de vencimiento</div>
+        <div class="col-sm-6">{{ .ExpirationDate }} </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">Fecha de compra</div>
+        <div class="col-sm-6">{{ .PurchaseDate }} </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">Lugar de compra</div>
+        <div class="col-sm-6">{{ .PurchasePlace }} </div>
+    </div>
+
+    <div class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            {{ range .Images }}
+            <div class="carousel-item active">
+                    <img src="{{.ImageURL}}" class="d-block w-100" alt="{{.Brand}}">
+            </div>
+            {{ end }}
+        </div>
+        </div>
+    {{end}}
+</div>
+
+{{ template "footer" }}
+{{ end }}

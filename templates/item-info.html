@@ -1,0 +1,41 @@
+{{ define "item-info" }}
+{{ template "header" }}
+<h1>Producto Creado: {{.Name}}</h1>
+
+<h2>Información del producto</h2>
+<div class="row">
+    <div class="col-sm-6">
+    <form action="/items/{{.ID}}/info" method="POST">
+        <div class="form-group">
+            <label>Brand</label>
+            <input type="text" name="brand" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Price</label>
+            <input type="text" name="price"  class="form-control" />
+        </div>
+        <!-- <div class="form-group">
+            <label>Brand</label>
+            <input type="text" name="unit" />
+        </div> -->
+        <div class="form-group">
+            <label>Fecha de compra</label>
+            <input type="text" name="purchase_date" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Lugar de compra</label>
+            <input type="text" name="purchase_place" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Fecha de vencimiento</label>
+            <input type="text" name="expiration_date" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Actualizar producto</button>
+    </form>
+    </div>
+</div>
+
+{{ template "footer" }}
+{{ end }}

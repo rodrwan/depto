@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  api:
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 50m
+        reservations:
+          cpus: "0.25"
+          memory: 20m
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        svcVersion: 0.0.1
+        svcName: depto-backend
+    restart: always
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+      - .:/data/depto
+    environment:
+      - DATABASE_URL=postgres://depto:depto2020@gopostgres:5432/depto?sslmode=disable
+    depends_on:
+      - gopostgres
+    ports:
+      - "8000:8000"
+    #command: sh -c "./bin/wait-pg-db && ./bin/goose -dir ./migrations/postgres postgres postgres://dale:dale2019@go-postgres:5432/dale?sslmode=disable up && go run cmd/server/main.go -env=local"
+    networks:
+      - depto
+
+  gopostgres:
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 250m
+        reservations:
+          cpus: "0.50"
+          memory: 150m
+    restart: always
+    image: postgres:11.2-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=depto
+      - POSTGRES_USER=depto
+      - POSTGRES_PASSWORD=depto2020
+    networks:
+      - depto
+
+networks:
+  depto:
